@@ -7,6 +7,7 @@ const urlSearch="https://pixabay.com/api/?";
 const keyApiPixabay="42443231-e69777d4d2b71e5eeb75f7bd2";
 const form = document.querySelector("#search-form");
 const gallery = document.querySelector(".gallery");
+const nextPageBtn = document.querySelector("#nextPage");
 
 Notify.info("start");
 const queryPar = new URLSearchParams({
@@ -48,31 +49,45 @@ const showValue=((data)=>{
   // console.log("test");
   console.log(data);
   gallery.replaceChildren();
+  console.log(data.hits.length);
+  if(data.hits.length>=40)
+  {
+    nextPageBtn.classList.remove('hidden');
+  }else{
+    nextPageBtn.classList.add('hidden');
+  }
+
   data.hits.map(({webformatURL,largeImageURL,tags, likes, views, comments, downloads})=>{
 
     gallery.insertAdjacentHTML('beforeend',
    `
-  <div class="photo-card">
-  <img class="gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy" />
-  <div class="info">
-    <p class="info-item">
-      <b>Likes</b>
-      ${likes}
-    </p>
-    <p class="info-item">
-      <b>Views</b>
-      ${views}
-    </p>
-    <p class="info-item">
-      <b>Comments</b>
-      ${comments}
-    </p>
-    <p class="info-item">
-      <b>Downloads</b>
-      ${downloads}
-    </p>
-  </div>
-</div>
+   <figure class="photo-card">
+      <div class="thumb">
+        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        <figcaption class="label">
+          <div class="info">
+            <p class="info-item">
+            <b>Likes</b>
+            ${likes}
+          </p>
+          <p class="info-item">
+            <b>Views</b>
+            ${views}
+          </p>
+          <p class="info-item">
+            <b>Comments</b>
+            ${comments}
+          </p>
+          <p class="info-item">
+            <b>Downloads</b>
+            ${downloads}
+          </p>
+        </div>
+      </figcaption>
+    </div>
+  </figure>
+    
+  
   `);
   });
   
@@ -80,6 +95,11 @@ const showValue=((data)=>{
   
 
 });
+
+
+
+
+
 
 
 // const gallerys = new SimpleLightbox('.photo-card div', {
@@ -97,6 +117,17 @@ const fetchSearch = async () =>{
 
 form.addEventListener("submit", (evt) => {
   evt.preventDefault();
+  queryPar.set("page", 1);
+  fetchSearch()
+    .then(res => showValue(res.data))
+    .catch(error => console.log(error));
+});
+
+nextPageBtn.addEventListener("click",(evt) =>{
+  evt.preventDefault();
+  const nextPage=Number(queryPar.get("page"))+1;
+  console.log(nextPage);
+  queryPar.set("page", nextPage);
   fetchSearch()
     .then(res => showValue(res.data))
     .catch(error => console.log(error));

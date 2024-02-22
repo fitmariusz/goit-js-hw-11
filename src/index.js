@@ -3,6 +3,7 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import axios from "axios";
 
+const urlSearch="https://pixabay.com/api/?";
 const keyApiPixabay="42443231-e69777d4d2b71e5eeb75f7bd2";
 const form = document.querySelector("#search-form");
 const gallery = document.querySelector(".gallery");
@@ -89,18 +90,14 @@ const showValue=((data)=>{
 
 
 const fetchSearch = async () =>{
-  // searchText=form.elements.searchQuery.value.split(" ").join("+");
   queryPar.set("q",form.elements.searchQuery.value.split(" ").join("+"));
-  // queryPar.set("page",2);
-  const res = await axios.get(`https://pixabay.com/api/?${queryPar}`);
+  const res = await axios.get(`${urlSearch}${queryPar}`);
   return res;
 };
 
-  form.addEventListener("submit", (evt) => {
+form.addEventListener("submit", (evt) => {
   evt.preventDefault();
-  
-  
   fetchSearch()
     .then(res => showValue(res.data))
     .catch(error => console.log(error));
-  });
+});

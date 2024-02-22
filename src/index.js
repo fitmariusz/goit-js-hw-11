@@ -1,18 +1,24 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// Opisany w dokumentacji
 import SimpleLightbox from "simplelightbox";
-// Dodatkowy import stylów
 import "simplelightbox/dist/simple-lightbox.min.css";
 import axios from "axios";
-keyApiPixabay="42443231-e69777d4d2b71e5eeb75f7bd2";
+
+const keyApiPixabay="42443231-e69777d4d2b71e5eeb75f7bd2";
 const form = document.querySelector("#search-form");
 const gallery = document.querySelector(".gallery");
 
-const textSearch = "cat+black";
-
-
-
 Notify.info("start");
+const queryPar = new URLSearchParams({
+  key: keyApiPixabay,
+  q: "",
+  image_type: 'photo',
+  orientation: 'horizontal',
+  page:1,
+  per_page: 40,
+});
+
+
+
 
 // onst arrayDiv=galleryItems.map((item) => {
 //   const aImage = document.createElement('a');
@@ -33,20 +39,13 @@ Notify.info("start");
 //   captionDelay: 250,
 // });
 
-
-
-
-
-
-
-
 const showValue=((data)=>{ 
   if(data.hits.length<=0){
       Notify.failure("Sorry, there are no images matching your search query. Please try again.")
   }
   else{
   // console.log("test");
-  console.log(data.hits);
+  console.log(data);
   gallery.replaceChildren();
   data.hits.map(({webformatURL,largeImageURL,tags, likes, views, comments, downloads})=>{
 
@@ -88,28 +87,20 @@ const showValue=((data)=>{
 //   });
 
 
-form.addEventListener("submit", (evt) => {
-  const urlQuestion=`https://pixabay.com/api/?key=${keyApiPixabay}&q=${form.elements.searchQuery.value.split(" ").join("+")}&image_type=photo_orientation=horizontal_safesearch=true`;
+
+const fetchSearch = async () =>{
+  // searchText=form.elements.searchQuery.value.split(" ").join("+");
+  queryPar.set("q",form.elements.searchQuery.value.split(" ").join("+"));
+  // queryPar.set("page",2);
+  const res = await axios.get(`https://pixabay.com/api/?${queryPar}`);
+  return res;
+};
+
+  form.addEventListener("submit", (evt) => {
   evt.preventDefault();
   
   
-    // const valueSearch = axios.get(urlQuestion)
-    //                         .then(res => res.data)
-    //                         .catch(error => error.message);
-  fetch(urlQuestion)
-    .then((res) => res.json())
-    .then((data=>showValue(data)))
-    .catch((error) => console.log(error));
-        
-    // form.reset();
+  fetchSearch()
+    .then(res => showValue(res.data))
+    .catch(error => console.log(error));
   });
-
-
-
-  
-// fetch(urlQuestion)
-//     .then((res) => res.json())
-//     .then((data => console.log(data)));
-
-
-

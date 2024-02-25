@@ -29,6 +29,11 @@ const showValue=((data)=>{
     console.log(data);
     gallery.replaceChildren();
     console.log(data.hits.length);
+    if(queryPar.get("page")==1){
+      Notify.success(`Hooray! We found ${data.total} images.`);
+    }
+
+
     if(data.hits.length>=40)
     {
       nextPageBtn.classList.remove('hidden');
@@ -44,7 +49,9 @@ const showValue=((data)=>{
       gallery.insertAdjacentHTML('beforeend',
         `<figure class="photo-card">
           <div class="thumb">
+
             <img class"imgGallery" src="${webformatURL}" alt="${tags}" loading="lazy" />
+            
             <figcaption class="label">
               <div class="info">
                 <p class="info-item">
@@ -65,10 +72,12 @@ const showValue=((data)=>{
                 </p>
               </div>
             </figcaption>
+
           </div>
         </figure>`
       );
     });
+
   }
 });
 
@@ -130,3 +139,54 @@ nextPageBtn.addEventListener("click",(evt) =>{
 //   captionDelay: 250,
 //   });
 
+// const showValue=((data)=>{ 
+//   if(data.hits.length<=0){
+//       Notify.failure("Sorry, there are no images matching your search query. Please try again.")
+//   }
+//   else{
+//   // console.log("test");
+//     console.log(data);
+//     gallery.replaceChildren();
+//     console.log(data.hits.length);
+//     if(data.hits.length>=40)
+//     {
+//       nextPageBtn.classList.remove('hidden');
+//       pInfo.classList.add('hidden');
+
+//     }else{
+//       pInfo.classList.remove('hidden');
+//       nextPageBtn.classList.add('hidden');
+//     }
+
+//     data.hits.map(({webformatURL,largeImageURL,tags, likes, views, comments, downloads})=>{
+
+//       gallery.insertAdjacentHTML('beforeend',
+//         `<figure class="photo-card">
+//           <div class="thumb">
+//             <img class"imgGallery" src="${webformatURL}" alt="${tags}" loading="lazy" />
+//             <figcaption class="label">
+//               <div class="info">
+//                 <p class="info-item">
+//                   <b>Likes</b>
+//                   ${likes}
+//                 </p>
+//                 <p class="info-item">
+//                   <b>Views</b>
+//                   ${views}
+//                 </p>
+//                 <p class="info-item">
+//                   <b>Comments</b>
+//                   ${comments}
+//                 </p>
+//                 <p class="info-item">
+//                   <b>Downloads</b>
+//                   ${downloads}
+//                 </p>
+//               </div>
+//             </figcaption>
+//           </div>
+//         </figure>`
+//       );
+//     });
+//   }
+// });

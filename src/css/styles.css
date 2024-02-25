@@ -14,7 +14,16 @@
     margin-left: auto;
     margin-right: auto;
   }
-  
+  .classBtn{
+    display: flex;
+    justify-content: center;
+  }
+  .nextPageBtn{
+    background-color: blue;
+    padding: 6px;
+    border-radius: 5px;
+    color: white;
+  }
   .hidden{
     display: none;
   }
@@ -96,9 +105,4 @@
     top: 0;
     z-index: 999;
   }
-  .nextPageBtn{
-    display:block;
-    justify-content: center;
-
-  }
-
+  

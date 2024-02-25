@@ -8,6 +8,7 @@ const keyApiPixabay="42443231-e69777d4d2b71e5eeb75f7bd2";
 const form = document.querySelector("#search-form");
 const gallery = document.querySelector(".gallery");
 const nextPageBtn = document.querySelector("#nextPage");
+const pInfo = document.querySelector('#pInfo');
 
 Notify.info("start");
 const queryPar = new URLSearchParams({
@@ -53,7 +54,10 @@ const showValue=((data)=>{
   if(data.hits.length>=40)
   {
     nextPageBtn.classList.remove('hidden');
+    pInfo.classList.add('hidden');
+
   }else{
+    pInfo.classList.remove('hidden');
     nextPageBtn.classList.add('hidden');
   }
 
@@ -110,6 +114,7 @@ const showValue=((data)=>{
 
 
 const fetchSearch = async () =>{
+  pInfo.classList.add('hidden');
   queryPar.set("q",form.elements.searchQuery.value.split(" ").join("+"));
   const res = await axios.get(`${urlSearch}${queryPar}`);
   return res;

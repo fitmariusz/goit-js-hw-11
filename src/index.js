@@ -10,7 +10,6 @@ const gallery = document.querySelector(".gallery");
 const nextPageBtn = document.querySelector("#nextPage");
 const pInfo = document.querySelector('#pInfo');
 
-Notify.info("start");
 const queryPar = new URLSearchParams({
   key: keyApiPixabay,
   q: "",

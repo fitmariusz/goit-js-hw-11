@@ -20,98 +20,57 @@ const queryPar = new URLSearchParams({
   per_page: 40,
 });
 
-
-
-
-// onst arrayDiv=galleryItems.map((item) => {
-//   const aImage = document.createElement('a');
-//   aImage.setAttribute('class', 'gallery__item gallery_link');
-//   aImage.href = item.original;
-//   const image = document.createElement('img');
-//   image.setAttribute('class', 'gallery__image');
-//   image.src=item.preview;
-//   image.alt=item.description;
-//   aImage.append(image);
-//   return aImage;
-// });
-// ulGallery.append(...arrayDiv);
-
-  
-// const gallery = new SimpleLightbox('.gallery a', {
-//   captionsData: 'alt',
-//   captionDelay: 250,
-// });
-
 const showValue=((data)=>{ 
   if(data.hits.length<=0){
       Notify.failure("Sorry, there are no images matching your search query. Please try again.")
   }
   else{
   // console.log("test");
-  console.log(data);
-  gallery.replaceChildren();
-  console.log(data.hits.length);
-  if(data.hits.length>=40)
-  {
-    nextPageBtn.classList.remove('hidden');
-    pInfo.classList.add('hidden');
+    console.log(data);
+    gallery.replaceChildren();
+    console.log(data.hits.length);
+    if(data.hits.length>=40)
+    {
+      nextPageBtn.classList.remove('hidden');
+      pInfo.classList.add('hidden');
 
-  }else{
-    pInfo.classList.remove('hidden');
-    nextPageBtn.classList.add('hidden');
+    }else{
+      pInfo.classList.remove('hidden');
+      nextPageBtn.classList.add('hidden');
+    }
+
+    data.hits.map(({webformatURL,largeImageURL,tags, likes, views, comments, downloads})=>{
+
+      gallery.insertAdjacentHTML('beforeend',
+        `<figure class="photo-card">
+          <div class="thumb">
+            <img class"imgGallery" src="${webformatURL}" alt="${tags}" loading="lazy" />
+            <figcaption class="label">
+              <div class="info">
+                <p class="info-item">
+                  <b>Likes</b>
+                  ${likes}
+                </p>
+                <p class="info-item">
+                  <b>Views</b>
+                  ${views}
+                </p>
+                <p class="info-item">
+                  <b>Comments</b>
+                  ${comments}
+                </p>
+                <p class="info-item">
+                  <b>Downloads</b>
+                  ${downloads}
+                </p>
+              </div>
+            </figcaption>
+          </div>
+        </figure>`
+      );
+    });
   }
-
-  data.hits.map(({webformatURL,largeImageURL,tags, likes, views, comments, downloads})=>{
-
-    gallery.insertAdjacentHTML('beforeend',
-   `
-   <figure class="photo-card">
-      <div class="thumb">
-        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-        <figcaption class="label">
-          <div class="info">
-            <p class="info-item">
-            <b>Likes</b>
-            ${likes}
-          </p>
-          <p class="info-item">
-            <b>Views</b>
-            ${views}
-          </p>
-          <p class="info-item">
-            <b>Comments</b>
-            ${comments}
-          </p>
-          <p class="info-item">
-            <b>Downloads</b>
-            ${downloads}
-          </p>
-        </div>
-      </figcaption>
-    </div>
-  </figure>
-    
-  
-  `);
-  });
-  
-  }
-  
-
 });
-
-
-
-
-
-
-
-// const gallerys = new SimpleLightbox('.photo-card div', {
-//   captionsData: 'alt',
-//   captionDelay: 250,
-//   });
-
-
 
 const fetchSearch = async () =>{
   pInfo.classList.add('hidden');
@@ -137,3 +96,37 @@ nextPageBtn.addEventListener("click",(evt) =>{
     .then(res => showValue(res.data))
     .catch(error => console.log(error));
 });
+
+
+
+
+// onst arrayDiv=galleryItems.map((item) => {
+//   const aImage = document.createElement('a');
+//   aImage.setAttribute('class', 'gallery__item gallery_link');
+//   aImage.href = item.original;
+//   const image = document.createElement('img');
+//   image.setAttribute('class', 'gallery__image');
+//   image.src=item.preview;
+//   image.alt=item.description;
+//   aImage.append(image);
+//   return aImage;
+// });
+// ulGallery.append(...arrayDiv);
+
+  
+// const gallery = new SimpleLightbox('.gallery a', {
+//   captionsData: 'alt',
+//   captionDelay: 250,
+// });
+
+
+
+
+
+
+
+// const gallerys = new SimpleLightbox('.photo-card div', {
+//   captionsData: 'alt',
+//   captionDelay: 250,
+//   });
+

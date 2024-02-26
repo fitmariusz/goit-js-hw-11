@@ -100,6 +100,8 @@ form.addEventListener("submit", (evt) => {
     Notify.warning('Enter some text...');
     gallery.innerHTML="";
     nextPageBtn.classList.add("hidden");
+    form.elements.searchQuery.value="";
+    pInfo.classList.add("hidden");
   }else{
   queryPar.set("page", 1);
   fetchSearch()
@@ -114,6 +116,8 @@ nextPageBtn.addEventListener("click",(evt) =>{
     Notify.warning('Enter some text...');
     gallery.innerHTML="";
     nextPageBtn.classList.add("hidden");
+    form.elements.searchQuery.value="";
+    pInfo.classList.add("hidden");
   }else{
     const nextPage=Number(queryPar.get("page"))+1;
     console.log(nextPage);

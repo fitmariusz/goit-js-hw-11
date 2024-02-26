@@ -18,16 +18,13 @@
     display: flex;
     justify-content: center;
   }
-  .nextPageBtn{
-    background-color: blue;
-    padding: 6px;
+/*  
+  input{
     border-radius: 5px;
-    color: white;
-  }
-  .hidden{
-    display: none;
-  }
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(238, 6, 6, 0.19);
 
+  } */
+ 
   .photo-card{
     display: flex;
     flex-direction: column;
@@ -106,4 +103,55 @@
     top: 0;
     z-index: 999;
   }
+
   
+  button {
+    position: relative;
+    overflow: hidden;
+    background: #42455a;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    font-size: 8px;
+    color: #e0ffff;
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 1;
+  }
+  button:active{
+    transform: scale(0.95);
+  }
+  button::before{
+    content: '';
+    position: absolute;
+    inset: -1px 15px;
+    background: #00c2cb;
+    transition: 500ms;
+    animation: rotate 4s linear infinite;
+    z-index: -1;
+  }
+  button:hover::before{
+    inset: -1px;
+  }
+  button::after{
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: #22232e;
+    z-index: -1;
+  }
+  @keyframes rotate {
+    0%{
+      transform: rotate(0deg);
+    }
+    100%{
+      transform: rotate(360deg);
+    }
+  }
+
+
+  .hidden{
+    display: none;
+  }

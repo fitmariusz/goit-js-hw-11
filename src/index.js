@@ -24,6 +24,8 @@ const queryPar = new URLSearchParams({
 const showValue=((data)=>{ 
   if(data.hits.length<=0){
       Notify.failure("Sorry, there are no images matching your search query. Please try again.")
+      form.elements.searchQuery.value="";
+      gallery.innerHTML="";
   }
   else{
   // console.log("test");
